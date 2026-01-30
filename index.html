@@ -28,6 +28,20 @@
             --spacing-xl: 6rem;
         }
 
+        [data-theme="light"] {
+            --black: #ffffff;
+            --charcoal: #f8f9fa;
+            --gray-900: #e9ecef;
+            --gray-800: #dee2e6;
+            --gray-600: #adb5bd;
+            --gray-400: #6c757d;
+            --gray-200: #495057;
+            --white: #212529;
+            --accent: #00b368;
+            --accent-dim: #009955;
+            --accent-glow: rgba(0, 179, 104, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -40,12 +54,48 @@
             color: var(--gray-200);
             background: var(--black);
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Syne', sans-serif;
             font-weight: 700;
             line-height: 1.2;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--gray-900);
+            border-radius: 50px;
+            cursor: pointer;
+            border: 2px solid var(--gray-800);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        .theme-toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        [data-theme="light"] .theme-toggle-slider {
+            transform: translateX(30px);
         }
 
         /* Header & Navigation */
@@ -57,6 +107,11 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--gray-900);
             z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.8);
         }
 
         nav {
@@ -65,7 +120,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 3rem;
+            padding: 1.25rem 3rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -83,7 +144,8 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 3rem;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         nav a {
@@ -161,6 +223,14 @@
             padding: 0 3rem;
             position: relative;
             z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.8s ease;
         }
 
         .status-badge {
@@ -173,7 +243,6 @@
             border-radius: 100px;
             margin-bottom: 2rem;
             font-size: 0.85rem;
-            animation: fadeInUp 0.6s ease;
         }
 
         .status-dot {
@@ -190,12 +259,11 @@
         }
 
         .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 800;
             color: var(--white);
             margin-bottom: 1.5rem;
             line-height: 1.1;
-            animation: fadeInUp 0.6s ease 0.1s backwards;
         }
 
         .hero-title .gradient-text {
@@ -206,12 +274,10 @@
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--gray-400);
-            max-width: 700px;
             margin-bottom: 3rem;
             line-height: 1.8;
-            animation: fadeInUp 0.6s ease 0.2s backwards;
         }
 
         @keyframes fadeInUp {
@@ -229,7 +295,6 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease 0.3s backwards;
         }
 
         .btn {
@@ -267,6 +332,61 @@
         .btn-secondary:hover {
             border-color: var(--accent);
             color: var(--accent);
+        }
+
+        /* Video Introduction */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: var(--charcoal);
+            border: 1px solid var(--gray-900);
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .video-placeholder {
+            aspect-ratio: 16/9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--charcoal) 100%);
+        }
+
+        .video-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .video-placeholder h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-placeholder p {
+            color: var(--gray-400);
+            font-size: 0.9rem;
         }
 
         /* Stats Section */
@@ -394,7 +514,7 @@
             margin-right: 1rem;
         }
 
-        /* Skills Section */
+        /* Skills Section - Enhanced with Experience Levels */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -417,35 +537,66 @@
         .skill-category h3 {
             font-size: 1.3rem;
             color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .skill-item {
             margin-bottom: 1.5rem;
         }
 
-        .skill-tags {
+        .skill-header {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
         }
 
-        .skill-tag {
-            background: var(--gray-900);
+        .skill-name {
+            font-size: 0.95rem;
             color: var(--gray-200);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            border: 1px solid var(--gray-800);
-            transition: all 0.3s;
+            font-weight: 500;
         }
 
-        .skill-tag:hover {
-            background: var(--accent);
-            color: var(--black);
-            border-color: var(--accent);
+        .skill-level {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
         }
 
-        /* Projects Section */
+        .skill-bar {
+            height: 8px;
+            background: var(--gray-900);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .skill-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+
+        .skill-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Projects Section - Enhanced with Metrics */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 2rem;
         }
 
@@ -494,6 +645,36 @@
             font-size: 0.95rem;
         }
 
+        /* Project Metrics */
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: var(--gray-900);
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .project-body {
             padding: 2rem;
             flex-grow: 1;
@@ -537,13 +718,6 @@
             background: var(--accent);
             color: var(--black);
             border-color: var(--accent);
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
         }
 
         /* Contact Modal */
@@ -641,9 +815,6 @@
 
         .contact-form {
             background: var(--charcoal);
-            border: 1px solid var(--gray-900);
-            padding: 3rem;
-            border-radius: 12px;
         }
 
         .form-group {
@@ -680,45 +851,6 @@
         .contact-form textarea {
             resize: vertical;
             min-height: 150px;
-        }
-
-        .contact-info h3 {
-            font-size: 1.8rem;
-            color: var(--white);
-            margin-bottom: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: start;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--charcoal);
-            border: 1px solid var(--gray-900);
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover {
-            border-color: var(--accent);
-        }
-
-        .contact-icon {
-            font-size: 1.5rem;
-            color: var(--accent);
-            min-width: 30px;
-        }
-
-        .contact-details h4 {
-            color: var(--white);
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .contact-details p {
-            color: var(--gray-400);
-            font-size: 0.9rem;
         }
 
         /* Footer */
@@ -762,22 +894,17 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 968px) {
-            nav {
-                padding: 1.5rem 2rem;
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
 
-            .hero-content,
-            section {
-                padding: var(--spacing-lg) 2rem;
+            .video-container {
+                max-width: 100%;
             }
 
-            .hero-title {
-                font-size: clamp(2.5rem, 7vw, 4rem);
-            }
-
-            .about-content,
-            .contact-content {
+            .about-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
@@ -788,16 +915,24 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-left {
+                gap: 1rem;
+            }
+
             .menu-toggle {
                 display: flex;
             }
 
             nav ul {
                 position: fixed;
-                top: 80px;
+                top: 70px;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 80px);
+                height: calc(100vh - 70px);
                 background: var(--charcoal);
                 flex-direction: column;
                 align-items: center;
@@ -812,6 +947,18 @@
                 left: 0;
             }
 
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .hero-content {
+                padding: 0 1.5rem;
+            }
+
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
@@ -820,20 +967,9 @@
             .skills-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        @media (max-width: 480px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .hero-content,
-            section {
-                padding: var(--spacing-md) 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .project-metrics {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .cta-group {
@@ -845,12 +981,40 @@
                 text-align: center;
             }
         }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
-<body>
+<body data-theme="dark">
     <header>
         <nav>
-            <div class="logo">GOPI<span>NATH</span></div>
+            <div class="nav-left">
+                <div class="logo">GOPI<span>NATH</span></div>
+            </div>
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -861,6 +1025,11 @@
                 <li><a href="#about" class="nav-link">ABOUT</a></li>
                 <li><a href="#projects" class="nav-link">PROJECTS</a></li>
                 <li><a href="#" class="nav-link" id="contactBtn">CONTACT ME</a></li>
+                <li>
+                    <div class="theme-toggle" id="themeToggle">
+                        <div class="theme-toggle-slider">🌙</div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -869,20 +1038,34 @@
         <div class="hero-background"></div>
         <div class="hero-grid"></div>
         <div class="hero-content">
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                <span>Available for opportunities</span>
+            <div class="hero-text">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>Available for opportunities</span>
+                </div>
+                <h1 class="hero-title">
+                    Building <span class="gradient-text">production-grade AI</span> systems that scale
+                </h1>
+                <p class="hero-description">
+                    AI/ML Engineer specializing in LLMs, RAG systems, and agentic AI. 
+                    Turning research-grade models into reliable, cost-effective production solutions.
+                </p>
+                <div class="cta-group">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#" class="btn btn-secondary" id="heroContactBtn">Contact Me</a>
+                </div>
             </div>
-            <h1 class="hero-title">
-                Building <span class="gradient-text">production-grade AI</span> systems that scale
-            </h1>
-            <p class="hero-description">
-                AI/ML Engineer specializing in LLMs, RAG systems, and agentic AI. 
-                Turning research-grade models into reliable, cost-effective production solutions.
-            </p>
-            <div class="cta-group">
-                <a href="#projects" class="btn btn-primary">View Projects</a>
-                <a href="#" class="btn btn-secondary" id="heroContactBtn">Contact Me</a>
+            <!div class="video-container">
+                <!div class="video-placeholder">
+                    <!div class="video-icon">▶</div>
+                    <!h3>Watch My Introduction</h3>
+                    <!p>2-minute overview of my work and approach to AI engineering</p>
+                <!/div>
+                <!-- Replace with actual video:
+                <video controls>
+                    <source src="your-intro-video.mp4" type="video/mp4">
+                </video>
+                -->
             </div>
         </div>
     </section>
@@ -894,7 +1077,7 @@
                 <div class="stat-label">Production Projects</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">99.9%</div>
+                <div class="stat-number">98%</div>
                 <div class="stat-label">System Uptime</div>
             </div>
             <div class="stat-item">
@@ -902,8 +1085,8 @@
                 <div class="stat-label">Documents Processed</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">2</div>
-                <div class="stat-label">AWS Certifications</div>
+                <div class="stat-number">20</div>
+                <div class="stat-label"> Certifications</div>
             </div>
         </div>
     </div>
@@ -953,42 +1136,183 @@
     <section id="skills">
         <div class="section-header">
             <div class="section-label">Technical Stack</div>
-            <h2 class="section-title">Tools & Technologies</h2>
+            <h2 class="section-title">Skills & Experience</h2>
         </div>
         <div class="skills-grid">
             <div class="skill-category">
-                <h3>AI & Computer Vision</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">PyTorch</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">OpenCV</span>
-                    <span class="skill-tag">CUDA</span>
-                    <span class="skill-tag">Keras</span>
+                <h3>AI & Machine Learning</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-level">Expert</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 95%" data-width="95"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 4+ years</span>
+                        <span>🚀 10+ projects</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">PyTorch</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 90%" data-width="90"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 3+ years</span>
+                        <span>🚀 8+ projects</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">TensorFlow</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 85%" data-width="85"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 3+ years</span>
+                        <span>🚀 6+ projects</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">OpenCV</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 80%" data-width="80"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 2+ years</span>
+                        <span>🚀 5+ projects</span>
+                    </div>
                 </div>
             </div>
 
             <div class="skill-category">
-                <h3>Generative & Agentic AI</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">LLMs & RAG</span>
-                    <span class="skill-tag">LangChain</span>
-                    <span class="skill-tag">LangGraph</span>
-                    <span class="skill-tag">AutoGen</span>
-                    <span class="skill-tag">CrewAI</span>
-                    <span class="skill-tag">LlamaIndex</span>
+                <h3>LLMs & Agentic AI</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">LangChain / LangGraph</span>
+                        <span class="skill-level">Expert</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 92%" data-width="92"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 2+ years</span>
+                        <span>🚀 7+ projects</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">RAG Systems</span>
+                        <span class="skill-level">Expert</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 95%" data-width="95"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 2+ years</span>
+                        <span>🚀 10+ implementations</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">LLM Fine-tuning (LoRA/QLoRA)</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 88%" data-width="88"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 1+ years</span>
+                        <span>🚀 4+ models</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Vector Databases (FAISS/Pinecone)</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 85%" data-width="85"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 2+ years</span>
+                        <span>🚀 8+ projects</span>
+                    </div>
                 </div>
             </div>
 
             <div class="skill-category">
-                <h3>Engineering & DevOps</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Terraform</span>
-                    <span class="skill-tag">FastAPI</span>
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">CI/CD</span>
+                <h3>DevOps & Cloud</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">AWS (EC2, S3, Lambda, SageMaker)</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 87%" data-width="87"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 3+ years</span>
+                        <span>🏆 2 Certifications</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Docker / Kubernetes</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 85%" data-width="85"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 2+ years</span>
+                        <span>🚀 10+ deployments</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">FastAPI / Flask</span>
+                        <span class="skill-level">Expert</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 90%" data-width="90"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 3+ years</span>
+                        <span>🚀 15+ APIs</span>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">MongoDB / PostgreSQL</span>
+                        <span class="skill-level">Advanced</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width: 82%" data-width="82"></div>
+                    </div>
+                    <div class="skill-meta">
+                        <span>📅 3+ years</span>
+                        <span>🚀 8+ projects</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -999,8 +1323,7 @@
             <div class="section-label">Portfolio</div>
             <h2 class="section-title">Featured Projects</h2>
             <p class="section-description">
-                A selection of production-grade AI systems I've built, focusing on scalability, 
-                reliability, and real-world impact.
+                Production-grade AI systems built with focus on scalability, reliability, and measurable business impact.
             </p>
         </div>
         <div class="projects-grid">
@@ -1008,6 +1331,20 @@
                 <div class="project-header">
                     <div class="project-icon">🤖</div>
                     <h3>Multi-Agent Order Management System</h3>
+                </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">1000+</span>
+                        <span class="metric-label">Concurrent Orders</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">99.9%</span>
+                        <span class="metric-label">Consistency</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">45%</span>
+                        <span class="metric-label">Cost Reduction</span>
+                    </div>
                 </div>
                 <div class="project-body">
                     <p>
@@ -1035,6 +1372,20 @@
                     <div class="project-icon">🔍</div>
                     <h3>Multi-Agent RAG System</h3>
                 </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">10K+</span>
+                        <span class="metric-label">Documents</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">40%</span>
+                        <span class="metric-label">Faster Queries</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">95%</span>
+                        <span class="metric-label">Accuracy</span>
+                    </div>
+                </div>
                 <div class="project-body">
                     <p>
                         Built production-grade RAG system with a central orchestrator coordinating Web Search, 
@@ -1061,11 +1412,25 @@
                     <div class="project-icon">⚡</div>
                     <h3>SFT Fine-Tuning with LoRA</h3>
                 </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">1M</span>
+                        <span class="metric-label">Instructions</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">1.31</span>
+                        <span class="metric-label">Val Loss</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">16K</span>
+                        <span class="metric-label">Context Length</span>
+                    </div>
+                </div>
                 <div class="project-body">
                     <p>
                         Fine-tuned DeepSeek-R1-Distill-Qwen-1.5B on 1M instructions using TRL SFTTrainer with 
                         LoRA/QLoRA. Optimized the training pipeline to reduce validation loss to 1.31 with 
-                        16K token context support.
+                        16K token context support and 60% training time reduction.
                     </p>
                     <div class="project-tags">
                         <span class="tag">TRL</span>
@@ -1087,11 +1452,25 @@
                     <div class="project-icon">🧠</div>
                     <h3>BERT Sentence Pair Classification</h3>
                 </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">89.97</span>
+                        <span class="metric-label">F1 Score</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">84.54%</span>
+                        <span class="metric-label">Accuracy</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">+5%</span>
+                        <span class="metric-label">vs Baseline</span>
+                    </div>
+                </div>
                 <div class="project-body">
                     <p>
                         Adapted BERT-base uncased for GLUE MRPC dataset, achieving 89.97 F1 and 84.54% validation 
-                        accuracy. Built end-to-end training pipeline using Hugging Face Trainer API with comprehensive 
-                        evaluation metrics.
+                        accuracy, surpassing baseline BERT performance. Built end-to-end training pipeline with 
+                        comprehensive evaluation metrics and model checkpointing.
                     </p>
                     <div class="project-tags">
                         <span class="tag">Python</span>
@@ -1109,8 +1488,6 @@
             </div>
         </div>
     </section>
-
-
 
     <footer>
         <div class="social-links">
@@ -1153,18 +1530,18 @@
                 <div class="modal-close" id="closeModal">&times;</div>
             </div>
             <div class="modal-body">
-                <form id="contactForm" class="contact-form">
+                <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" placeholder="Your name" required>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="your.email@example.com" required>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+                        <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                 </form>
@@ -1173,6 +1550,52 @@
     </div>
 
     <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const body = document.body;
+        
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const slider = themeToggle.querySelector('.theme-toggle-slider');
+            slider.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        // Skill bar animation on scroll
+        const skillBars = document.querySelectorAll('.skill-bar-fill');
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width + '%';
+                }
+            });
+        }, observerOptions);
+
+        skillBars.forEach(bar => {
+            bar.style.width = '0%';
+            skillObserver.observe(bar);
+        });
+
         // Modal functionality
         const contactModal = document.getElementById('contactModal');
         const contactBtn = document.getElementById('contactBtn');
@@ -1194,14 +1617,12 @@
         heroContactBtn.addEventListener('click', openModal);
         closeModal.addEventListener('click', closeModalFunc);
 
-        // Close modal when clicking outside
         contactModal.addEventListener('click', function(e) {
             if (e.target === contactModal) {
                 closeModalFunc();
             }
         });
 
-        // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && contactModal.classList.contains('active')) {
                 closeModalFunc();
@@ -1229,7 +1650,6 @@
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                // Don't close menu if it's the contact button
                 if (link.id !== 'contactBtn') {
                     navMenu.classList.remove('active');
                     const spans = menuToggle.querySelectorAll('span');
@@ -1243,7 +1663,6 @@
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                // Skip if it's a modal trigger
                 if (this.id === 'contactBtn' || this.id === 'heroContactBtn') {
                     return;
                 }
@@ -1260,32 +1679,30 @@
 
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-            closeModalFunc();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
         });
 
         // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
+        const fadeInObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
         document.querySelectorAll('.project-card, .skill-category, .stat-item').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+            fadeInObserver.observe(el);
         });
     </script>
 </body>
